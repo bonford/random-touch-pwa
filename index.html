@@ -7,38 +7,47 @@
   <link rel="manifest" href="manifest.json" />
   <link rel="icon" href="icons/icon-192.png" type="image/png" />
 </head>
-<body style="display: flex; justify-content: center; align-items: center; height: 100vh; background: white; margin: 0;">
-  <h1 id="touch" style="color: red; text-align: center; font-size: 3rem; font-family: sans-serif;">
+<body style="margin: 0; height: 100vh; display: flex; flex-direction: column; position: relative; background: white; font-family: sans-serif;">
+
+  <div style="flex: 0 0 25vh;"></div> <!-- pushes text 1/4 from top -->
+
+  <h1 id="touch" style="color: red; text-align: center; font-size: 3rem; margin: 0 auto;">
     Loading...
   </h1>
-  <button onclick="location.reload()" style="margin-top: 20px; font-size: 1.2rem; padding: 10px 20px;">
-  🔁 Refresh
-</button>
+
+  <button 
+    onclick="nextTouch()" 
+    style="
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1.2rem;
+      padding: 10px 20px;
+    ">
+    🔁 New Random Touch
+  </button>
 
   <script>
-    const touches = ['Beethoven','Mozart','Chopin','Liszt','Very Dynamic','Moderately Dynamic','MIDI','Loud','Moderate','Soft','Pizzicato','Stacatto','Portamento','Legato','Swing','Adagio','Gould','Sunny','Rainy','Snowstorm','Happy','Sad','Afraid','Angry','Surprised','Disgusted','Joyful','Content','Grateful','Loving','Amused','Proud','Hopeful','Relieved','Satisfied','Excited','Compassionate','Affectionate','Euphoric','Awed','Anxious','Grieving','Ashamed','Guilty','Jealous','Embarrassed','Frustrated','Lonely','Envious','Despairing','Regretful','Hurt','Disappointed','Resentful','Hopeless','Bittersweet','Nostalgic','Ambivalent','Suspicious','Longing','Confused','Yearning','Vulnerable','Empathetic','Breathless','Contemptuous','Red','Yellow','Green','Blue','Purple','Brown'];
+    const touches = ['Beethoven','Mozart','Chopin','Liszt','Very Dynamic','Moderately Dynamic','MIDI','Loud','Moderate','Soft','Pizzicato','Stacatto','Portamento','Legato','Swing','Adagio','Gould','Sunny','Rainy','Snowstorm','Happy','Sad','Afraid','Angry','Surprised','Disgusted','Joyful','Content','Grateful','Loving','Amused','Proud','Hopeful','Relieved','Satisfied','Excited','Compassionate','Affectionate','Euphoric','Awed','Anxious','Grieving','Ashamed','Guilty','Jealous','Embarrassed','Frustrat...
 
     let shown = JSON.parse(localStorage.getItem('shownTouches') || '[]');
-    let remaining = touches.filter(t => !shown.includes(t));
 
-    if (remaining.length === 0) {
-      shown = [];
-      remaining = [...touches];
+    function nextTouch() {
+      let remaining = touches.filter(t => !shown.includes(t));
+      if (remaining.length === 0) {
+        shown = [];
+        remaining = [...touches];
+      }
+      const selected = remaining[Math.floor(Math.random() * remaining.length)];
+      shown.push(selected);
+      localStorage.setItem('shownTouches', JSON.stringify(shown));
+      document.getElementById('touch').textContent = selected;
     }
 
-    const selected = remaining[Math.floor(Math.random() * remaining.length)];
-    shown.push(selected);
-    localStorage.setItem('shownTouches', JSON.stringify(shown));
-
-    document.getElementById('touch').textContent = selected;
+    nextTouch();
   </script>
 
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('service-worker.js')
-        .then(() => console.log('Service Worker Registered'))
-        .catch(err => console.error('SW reg failed', err));
-    }
-  </script>
 </body>
+
 </html>
