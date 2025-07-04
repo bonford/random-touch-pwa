@@ -9,7 +9,7 @@
 </head>
 <body style="margin: 0; height: 100vh; display: flex; flex-direction: column; position: relative; background: white; font-family: sans-serif;">
 
-  <div style="flex: 0 0 25vh;"></div> <!-- pushes text 1/4 from top -->
+  <div style="flex: 0 0 25vh;"></div> <!-- Pushes content 1/4 from top -->
 
   <h1 id="touch" style="color: red; text-align: center; font-size: 3rem; margin: 0 auto;">
     Loading...
@@ -29,7 +29,16 @@
   </button>
 
   <script>
-    const touches = ['Beethoven','Mozart','Chopin','Liszt','Very Dynamic','Moderately Dynamic','MIDI','Loud','Moderate','Soft','Pizzicato','Stacatto','Portamento','Legato','Swing','Adagio','Gould','Sunny','Rainy','Snowstorm','Happy','Sad','Afraid','Angry','Surprised','Disgusted','Joyful','Content','Grateful','Loving','Amused','Proud','Hopeful','Relieved','Satisfied','Excited','Compassionate','Affectionate','Euphoric','Awed','Anxious','Grieving','Ashamed','Guilty','Jealous','Embarrassed','Frustrat...
+    const touches = [
+      'Beethoven','Mozart','Chopin','Liszt','Very Dynamic','Moderately Dynamic','MIDI','Loud','Moderate','Soft',
+      'Pizzicato','Stacatto','Portamento','Legato','Swing','Adagio','Gould','Sunny','Rainy','Snowstorm','Happy',
+      'Sad','Afraid','Angry','Surprised','Disgusted','Joyful','Content','Grateful','Loving','Amused','Proud',
+      'Hopeful','Relieved','Satisfied','Excited','Compassionate','Affectionate','Euphoric','Awed','Anxious',
+      'Grieving','Ashamed','Guilty','Jealous','Embarrassed','Frustrated','Lonely','Envious','Despairing',
+      'Regretful','Hurt','Disappointed','Resentful','Hopeless','Bittersweet','Nostalgic','Ambivalent',
+      'Suspicious','Longing','Confused','Yearning','Vulnerable','Empathetic','Breathless','Contemptuous',
+      'Red','Yellow','Green','Blue','Purple','Brown', 'Long Line'
+    ];
 
     let shown = JSON.parse(localStorage.getItem('shownTouches') || '[]');
 
@@ -49,5 +58,6 @@
   </script>
 
 </body>
+
 
 </html>
