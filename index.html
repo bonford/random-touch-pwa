@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Random Touch</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="icons/icon-192.png" type="image/png" />
+</head>
+<body>
+  <h1 id="touch">Loading...</h1>
+
+  <script>
+    const touches = ['Beethoven','Mozart','Chopin','Liszt','Very Dynamic','Moderately Dynamic','MIDI','Loud','Moderate','Soft','Pizzicato','Stacatto','Portamento','Legato','Swing','Adagio','Gould','Sunny','Rainy','Snowstorm','Happy','Sad','Afraid','Angry','Surprised','Disgusted','Joyful','Content','Grateful','Loving','Amused','Proud','Hopeful','Relieved','Satisfied','Excited','Compassionate','Affectionate','Euphoric','Awed','Anxious','Grieving','Ashamed','Guilty','Jealous','Embarrassed','Frustrated','Lonely','Envious','Despairing','Regretful','Hurt','Disappointed','Resentful','Hopeless','Bittersweet','Nostalgic','Ambivalent','Suspicious','Longing','Confused','Yearning','Vulnerable','Empathetic','Breathless','Contemptuous','Red','Yellow','Green','Blue','Purple','Brown'];
+
+    let shown = JSON.parse(localStorage.getItem('shownTouches') || '[]');
+    let remaining = touches.filter(t => !shown.includes(t));
+
+    if (remaining.length === 0) {
+      shown = [];
+      remaining = [...touches];
+    }
+
+    const selected = remaining[Math.floor(Math.random() * remaining.length)];
+    shown.push(selected);
+    localStorage.setItem('shownTouches', JSON.stringify(shown));
+
+    document.getElementById('touch').textContent = selected;
+  </script>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js')
+        .then(() => console.log('Service Worker Registered'))
+        .catch(err => console.error('SW reg failed', err));
+    }
+  </script>
+</body>
+</html>
