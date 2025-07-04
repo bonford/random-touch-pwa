@@ -55,6 +55,33 @@
     }
 
     nextTouch();
+
+    let wakeLock = null;
+
+async function requestWakeLock() {
+  try {
+    wakeLock = await navigator.wakeLock.request('screen');
+    console.log('Wake Lock is active');
+
+    wakeLock.addEventListener('release', () => {
+      console.log('Wake Lock was released');
+    });
+  } catch (err) {
+    console.error(`${err.name}, ${err.message}`);
+  }
+}
+
+// Try to acquire wake lock on load
+if ('wakeLock' in navigator) {
+  requestWakeLock();
+
+  // Reacquire wake lock if the tab becomes visible again
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') {
+      requestWakeLock();
+    }
+  });
+}
   </script>
 
 </body>
