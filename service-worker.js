@@ -1,4 +1,4 @@
-const cacheName = 'random-touch-v6';
+const cacheName = 'random-touch-v7';
 const filesToCache = [
   './',
   './index.html',
