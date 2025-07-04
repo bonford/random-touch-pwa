@@ -1,4 +1,4 @@
-const cacheName = 'random-touch-v1';
+const cacheName = 'random-touch-v2';
 const filesToCache = [
   './',
   './index.html',
@@ -14,4 +14,16 @@ self.addEventListener('install', e => {
 
 self.addEventListener('fetch', e => {
   e.respondWith(caches.match(e.request).then(res => res || fetch(e.request)));
+});
+
+self.addEventListener('activate', e => {
+  e.waitUntil(
+    caches.keys().then(keyList =>
+      Promise.all(keyList.map(key => {
+        if (key !== cacheName) {
+          return caches.delete(key);
+        }
+      }))
+    )
+  );
 });
